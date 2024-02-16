@@ -1,0 +1,133 @@
+﻿<Window x:Class="IPCalculator.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IPCalculator.Wpf"
+        mc:Ignorable="d"
+        Title="IPCalculator" Height="900" Width="1087"
+        Loaded="Window_Loaded" 
+        FontSize="18"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <GroupBox Header="HOST 1" Margin="16,9,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top"  Width="470" Height="850">
+            <Grid >
+                <Label Content="IP" HorizontalAlignment="Left" Margin="7,11,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cmbHost1B1" HorizontalAlignment="Left" Height="28" Margin="60,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost1B1_SelectionChanged"/>
+                <ComboBox x:Name="cmbHost1B2" HorizontalAlignment="Left" Height="28" Margin="130,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost1B2_SelectionChanged"/>
+                <ComboBox x:Name="cmbHost1B3" HorizontalAlignment="Left" Height="28" Margin="200,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost1B3_SelectionChanged"/>
+                <ComboBox x:Name="cmbHost1B4" HorizontalAlignment="Left" Height="28" Margin="270,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost1B4_SelectionChanged"/>
+                <Label Content="CIDR" HorizontalAlignment="Left" Margin="7,45,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cmbHost1CIDR" HorizontalAlignment="Left" Height="28" Margin="60,50,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost1CIDR_SelectionChanged"/>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="IP" Margin="12,90,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid Margin="0,0,0,0" >
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,1,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost1IPDD" HorizontalAlignment="Left" Height="28"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350" Margin="60,5,0,0"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost1IPBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Subnetmask" Margin="12,210,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost1SubnetDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost1SubnetBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Network" Margin="12,330,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost1NetworkDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost1NetworkBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="First Host" Margin="12,450,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost1FirstHostDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost1FirstHostBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Last Host" Margin="12,570,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost1LastHostDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost1LastHostBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Broadcast" Margin="12,690,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost1BroadcastDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost1BroadcastBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="HOST 2" Margin="600,10,0,0"  HorizontalAlignment="Left"  VerticalAlignment="Top"   Width="470" Height="850">
+            <Grid>
+                <Label Content="IP" HorizontalAlignment="Left" Margin="7,11,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cmbHost2B1" HorizontalAlignment="Left" Height="28" Margin="60,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost2B1_SelectionChanged"/>
+                <ComboBox x:Name="cmbHost2B2" HorizontalAlignment="Left" Height="28" Margin="130,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost2B2_SelectionChanged"/>
+                <ComboBox x:Name="cmbHost2B3" HorizontalAlignment="Left" Height="28" Margin="200,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost2B3_SelectionChanged"/>
+                <ComboBox x:Name="cmbHost2B4" HorizontalAlignment="Left" Height="28" Margin="270,14,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost2B4_SelectionChanged"/>
+                <Label Content="CIDR" HorizontalAlignment="Left" Margin="7,45,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cmbHost2CIDR" HorizontalAlignment="Left" Height="28" Margin="60,50,0,0" VerticalAlignment="Top" Width="61" SelectionChanged="CmbHost2CIDR_SelectionChanged"/>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="IP" Margin="12,90,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost2IPDD" HorizontalAlignment="Left" Height="28"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350" Margin="60,5,0,0"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost2IPBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Subnetmask" Margin="12,210,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost2SubnetDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost2SubnetBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Network" Margin="12,330,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost2NetworkDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost2NetworkBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="First Host" Margin="12,450,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost2FirstHostDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost2FirstHostBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Last Host" Margin="12,570,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost2LastHostDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost2LastHostBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox HorizontalAlignment="Left" Height="110" Header="Broadcast" Margin="12,690,0,0" VerticalAlignment="Top" Width="430">
+                    <Grid>
+                        <Label Content="DD" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Binair" HorizontalAlignment="Left" Margin="4,32,0,0" VerticalAlignment="Top"/>
+                        <TextBox IsReadOnly="True" x:Name="txtHost2BroadcastDD" HorizontalAlignment="Left" Height="28" Margin="59,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                        <TextBox IsReadOnly="True"  x:Name="txtHost2BroadcastBinary" HorizontalAlignment="Left" Height="28" Margin="60,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="350"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        <Image x:Name="imgColor" HorizontalAlignment="Left" Height="100" Margin="492,26,0,0" VerticalAlignment="Top" Width="100"/>
+    </Grid>
+</Window>
