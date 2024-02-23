@@ -61,7 +61,7 @@ namespace IPCalculator.Wpf
                 cmbHost1CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
                 cmbHost1CIDR.SelectedIndex = 0;
 
-                txtHost1IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost1NumberValues());
+                RefreshHost1IpAddress();
             }         
         }
 
@@ -82,15 +82,18 @@ namespace IPCalculator.Wpf
 
         private void CmbHost1CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int num1 = GetHost1NumberValues()[0];
-            int num2 = GetHost1NumberValues()[1];
-            int num3 = GetHost1NumberValues()[2];
-            int num4 = GetHost1NumberValues()[3];
-            if (cmbHost1CIDR.SelectedItem != null)
-            {
-                ipCalculatorService.Host1.IpAddress = ipCalculatorService.FormatIpAddress(num1, num2, num3, num4);
-                txtHost1IPDD.Text = ipCalculatorService.Host1.IpAddress;
-            }
+            int cidrValue = (int)cmbHost1CIDR.SelectedItem;
+            //int num1 = GetHost1NumberValues()[0];
+            //int num2 = GetHost1NumberValues()[1];
+            //int num3 = GetHost1NumberValues()[2];
+            //int num4 = GetHost1NumberValues()[3];
+            //if (cmbHost1CIDR.SelectedItem != null)
+            //{
+            //    ipCalculatorService.Host1.IpAddress = ipCalculatorService.FormatIpAddress(num1, num2, num3, num4);
+            //    txtHost1IPDD.Text = ipCalculatorService.Host1.IpAddress;
+            //}
+            RefreshHost1IpAddress();
+            txtHost1SubnetBinary.Text = ipCalculatorService.GetSubnetMask(cidrValue);
         }
 
         private void CmbHost2B1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -107,7 +110,7 @@ namespace IPCalculator.Wpf
                 cmbHost2CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
                 cmbHost2CIDR.SelectedIndex = 0;
 
-                txtHost2IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost2NumberValues());
+                RefreshHost2IpAddress();
             }
         }
 
@@ -117,6 +120,7 @@ namespace IPCalculator.Wpf
             //{
             //    cmbHost2B3.ItemsSource = ComboBoxDataLoader.LoadThirdNumberOption();
             //}
+            RefreshHost2IpAddress();
         }
 
         private void CmbHost2B3_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -125,6 +129,7 @@ namespace IPCalculator.Wpf
             //{
             //    cmbHost2B4.ItemsSource = ComboBoxDataLoader.LoadFourthNumberOption();
             //}
+            RefreshHost2IpAddress();
         }
 
         private void CmbHost2B4_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -134,19 +139,23 @@ namespace IPCalculator.Wpf
             //    int selectionFirstNumber = (int)cmbHost2B1.SelectedItem;
             //    cmbHost2CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
             //}
+            RefreshHost2IpAddress();
         }
 
         private void CmbHost2CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int num1 = GetHost2NumberValues()[0];
-            int num2 = GetHost2NumberValues()[1];
-            int num3 = GetHost2NumberValues()[2];
-            int num4 = GetHost2NumberValues()[3];
-            if (cmbHost2CIDR.SelectedItem != null)
-            {
-                ipCalculatorService.Host2.IpAddress = ipCalculatorService.FormatIpAddress(num1, num2, num3, num4);
-                txtHost2IPDD.Text = ipCalculatorService.Host2.IpAddress;
-            }
+            int cidrValue = (int)cmbHost2CIDR.SelectedItem;
+            //int num1 = GetHost2NumberValues()[0];
+            //int num2 = GetHost2NumberValues()[1];
+            //int num3 = GetHost2NumberValues()[2];
+            //int num4 = GetHost2NumberValues()[3];
+            //if (cmbHost2CIDR.SelectedItem != null)
+            //{
+            //    ipCalculatorService.Host2.IpAddress = ipCalculatorService.FormatIpAddress(GetHost2NumberValues());
+            //    txtHost2IPDD.Text = ipCalculatorService.Host2.IpAddress;
+            //}
+            RefreshHost2IpAddress();
+            txtHost2SubnetBinary.Text = ipCalculatorService.GetSubnetMask(cidrValue);
         }
 
         void PopulateFirstComboBoxes()
@@ -184,8 +193,17 @@ namespace IPCalculator.Wpf
             if (cmbHost1B1.SelectedItem != null && cmbHost1B2.SelectedItem != null && cmbHost1B3.SelectedItem != null && cmbHost1B4.SelectedItem != null)
             {
                 txtHost1IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost1NumberValues());
+                txtHost1IPDD.Text = ipCalculatorService.FormatIpAddress(GetHost1NumberValues());
             }
         }
 
+        void RefreshHost2IpAddress()
+        {
+            if (cmbHost2B1.SelectedItem != null && cmbHost2B2.SelectedItem != null && cmbHost2B3.SelectedItem != null && cmbHost2B4.SelectedItem != null)
+            {
+                txtHost2IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost2NumberValues());
+                txtHost2IPDD.Text = ipCalculatorService.FormatIpAddress(GetHost2NumberValues());
+            }
+        }
     }
 }

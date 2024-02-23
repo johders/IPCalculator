@@ -20,9 +20,18 @@ namespace IPCalculator.Core.Service
             Host2 = new Host();
         }
 
-        public string FormatIpAddress(int num1, int num2, int num3, int num4)
+        public string FormatIpAddress(List<int> numbers)
         {
-            return $"{num1}.{num2}.{num3}.{num4}";
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(numbers[0]);
+            sb.Append(".");
+            sb.Append(numbers[1]);
+            sb.Append(".");
+            sb.Append(numbers[2]);
+            sb.Append(".");
+            sb.Append(numbers[3]);
+            return sb.ToString();
         }
 
         public string ConvertToByteSequence(List<int> numbers)
@@ -44,6 +53,23 @@ namespace IPCalculator.Core.Service
             return sb.ToString();
         }
 
+        public string GetSubnetMask (int cidrValue)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < cidrValue; i++)
+            {
+                sb.Append('1');
+            }
+
+            for (int i = 1;i <= (32 - cidrValue); i++)
+            {
+                sb.Append('0');
+            }
+
+            return sb.ToString();
+           
+        }
 
     }
 }
