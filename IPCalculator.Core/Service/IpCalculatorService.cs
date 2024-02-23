@@ -25,6 +25,25 @@ namespace IPCalculator.Core.Service
             return $"{num1}.{num2}.{num3}.{num4}";
         }
 
-        
+        public string ConvertToByteSequence(List<int> numbers)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (int number in numbers)
+            {
+                byte value = Convert.ToByte(number);
+                BitArray b = new BitArray(new byte[] { value });
+
+                for (int i = b.Count - 1; i >= 0; i--)
+                {
+                    char c = b[i] ? '1' : '0';
+                    sb.Append(c);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+
     }
 }

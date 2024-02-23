@@ -26,14 +26,11 @@ namespace IPCalculator.Wpf
     public partial class MainWindow : Window
     {
         IpCalculatorService ipCalculatorService;
-        //Host host1;
-        //Host host2;
+
         public MainWindow()
         {
             InitializeComponent();
-            ipCalculatorService = new IpCalculatorService();
-            //host1 = new Host();
-            //host2 = new Host();
+            ipCalculatorService = new IpCalculatorService();          
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -63,41 +60,32 @@ namespace IPCalculator.Wpf
                 cmbHost1B4.SelectedIndex = 0;
                 cmbHost1CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
                 cmbHost1CIDR.SelectedIndex = 0;
-                ConvertToBitArray(selectionFirstNumber);
+
+                txtHost1IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost1NumberValues());
             }         
         }
 
         private void CmbHost1B2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           //if(cmbHost1B2.SelectedItem != null)
-           // {
-           //     cmbHost1B3.ItemsSource = ComboBoxDataLoader.LoadThirdNumberOption();
-           // }
+            RefreshHost1IpAddress();
         }
 
         private void CmbHost1B3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (cmbHost1B3.SelectedItem != null)
-            //{
-            //    cmbHost1B4.ItemsSource = ComboBoxDataLoader.LoadFourthNumberOption();
-            //}
+            RefreshHost1IpAddress();
         }
 
         private void CmbHost1B4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //if (cmbHost1B4.SelectedItem != null)
-            //{
-            //    int selectionFirstNumber = (int)cmbHost1B1.SelectedItem;
-            //    cmbHost1CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
-            //}
+            RefreshHost1IpAddress();
         }
 
         private void CmbHost1CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int num1 = (int)cmbHost1B1.SelectedItem;
-            int num2 = (int)cmbHost1B2.SelectedItem;
-            int num3 = (int)cmbHost1B3.SelectedItem;
-            int num4 = (int)cmbHost1B4.SelectedItem;
+            int num1 = GetHost1NumberValues()[0];
+            int num2 = GetHost1NumberValues()[1];
+            int num3 = GetHost1NumberValues()[2];
+            int num4 = GetHost1NumberValues()[3];
             if (cmbHost1CIDR.SelectedItem != null)
             {
                 ipCalculatorService.Host1.IpAddress = ipCalculatorService.FormatIpAddress(num1, num2, num3, num4);
@@ -118,6 +106,8 @@ namespace IPCalculator.Wpf
                 cmbHost2B4.SelectedIndex = 0;
                 cmbHost2CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
                 cmbHost2CIDR.SelectedIndex = 0;
+
+                txtHost2IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost2NumberValues());
             }
         }
 
@@ -148,10 +138,10 @@ namespace IPCalculator.Wpf
 
         private void CmbHost2CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int num1 = (int)cmbHost2B1.SelectedItem;
-            int num2 = (int)cmbHost2B2.SelectedItem;
-            int num3 = (int)cmbHost2B3.SelectedItem;
-            int num4 = (int)cmbHost2B4.SelectedItem;
+            int num1 = GetHost2NumberValues()[0];
+            int num2 = GetHost2NumberValues()[1];
+            int num3 = GetHost2NumberValues()[2];
+            int num4 = GetHost2NumberValues()[3];
             if (cmbHost2CIDR.SelectedItem != null)
             {
                 ipCalculatorService.Host2.IpAddress = ipCalculatorService.FormatIpAddress(num1, num2, num3, num4);
@@ -159,29 +149,43 @@ namespace IPCalculator.Wpf
             }
         }
 
-
-
         void PopulateFirstComboBoxes()
         {       
             cmbHost1B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
             cmbHost2B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
         }
 
-        void ConvertToBitArray(int number)
+        List<int> GetHost1NumberValues()
         {
-            StringBuilder sb = new StringBuilder();
-
-            byte value = Convert.ToByte(number);
-            BitArray b = new BitArray(new byte[] { value });
-
-            for(int i = b.Count - 1; i >= 0; i--)
-            {
-                char c = b[i] ? '1' : '0';
-                sb.Append(c);
-            }
-
-            txtHost1IPBinary.Text = sb.ToString();
+            List<int> host1DecimalValues = new List<int>
+                {
+                    (int)cmbHost1B1.SelectedItem,
+                    (int)cmbHost1B2.SelectedItem,
+                    (int)cmbHost1B3.SelectedItem,
+                    (int)cmbHost1B4.SelectedItem
+                };
+            return host1DecimalValues;
         }
-       
+
+        List<int> GetHost2NumberValues()
+        {
+            List<int> host2DecimalValues = new List<int>
+                {
+                    (int)cmbHost2B1.SelectedItem,
+                    (int)cmbHost2B2.SelectedItem,
+                    (int)cmbHost2B3.SelectedItem,
+                    (int)cmbHost2B4.SelectedItem
+                };
+            return host2DecimalValues;
+        }
+
+       void RefreshHost1IpAddress()
+        {
+            if (cmbHost1B1.SelectedItem != null && cmbHost1B2.SelectedItem != null && cmbHost1B3.SelectedItem != null && cmbHost1B4.SelectedItem != null)
+            {
+                txtHost1IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost1NumberValues());
+            }
+        }
+
     }
 }
