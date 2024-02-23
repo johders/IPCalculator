@@ -1,6 +1,7 @@
 ﻿using IPCalculator.Core.Entities;
 using IPCalculator.Core.Service;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace IPCalculator.Wpf
                 cmbHost1B4.SelectedIndex = 0;
                 cmbHost1CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
                 cmbHost1CIDR.SelectedIndex = 0;
+                ConvertToBitArray(selectionFirstNumber);
             }         
         }
 
@@ -165,6 +167,21 @@ namespace IPCalculator.Wpf
             cmbHost2B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
         }
 
+        void ConvertToBitArray(int number)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            byte value = Convert.ToByte(number);
+            BitArray b = new BitArray(new byte[] { value });
+
+            for(int i = b.Count - 1; i >= 0; i--)
+            {
+                char c = b[i] ? '1' : '0';
+                sb.Append(c);
+            }
+
+            txtHost1IPBinary.Text = sb.ToString();
+        }
        
     }
 }
