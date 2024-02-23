@@ -8,7 +8,8 @@ namespace IPCalculator.Core.Entities
 {
     public class Host
     {
+        public string IpAddress { get; set; }
 
-
+       
     }
 }

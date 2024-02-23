@@ -73,15 +73,16 @@ namespace IPCalculator.Core.Service
             return fourthNumberOptions.AsReadOnly();
         }
 
-        public static IEnumerable<int> LoadCidrValues(int firstNumberSelection)
+        public static IEnumerable<string> LoadCidrValues(int firstNumberSelection)
         {
-            List<int> cidrValueOptions = new List<int>();
+            List<string> cidrValueOptions = new List<string>();
 
             if (firstNumberSelection == 10)
             {
                 for (int i = 8; i <= 30; i++)
                 {
-                    cidrValueOptions.Add(i);
+                    string formatedValue = "/" + i.ToString();
+                    cidrValueOptions.Add(formatedValue);
                 }
             }
 
@@ -89,7 +90,8 @@ namespace IPCalculator.Core.Service
             {
                 for (int i = 12; i <= 30; i++)
                 {
-                    cidrValueOptions.Add(i);
+                    string formatedValue = "/" + i.ToString();
+                    cidrValueOptions.Add(formatedValue);
                 }
             }
 
@@ -97,7 +99,8 @@ namespace IPCalculator.Core.Service
             {
                 for (int i = 16; i <= 30; i++)
                 {
-                    cidrValueOptions.Add(i);
+                    string formatedValue = "/" + i.ToString();
+                    cidrValueOptions.Add(formatedValue);
                 }
             }
 
