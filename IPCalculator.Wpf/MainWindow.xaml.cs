@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 
 namespace IPCalculator.Wpf
@@ -26,6 +27,8 @@ namespace IPCalculator.Wpf
     public partial class MainWindow : Window
     {
         IpCalculatorService ipCalculatorService;
+        string color = "white";
+        bool isCompatible = false;
 
         public MainWindow()
         {
@@ -44,12 +47,15 @@ namespace IPCalculator.Wpf
             DirectoryInfo directoryInfo = new DirectoryInfo(pad);
             directoryInfo = new DirectoryInfo(directoryInfo.Parent.Parent.Parent.FullName);
             Uri uri;
-            uri = new Uri(directoryInfo.FullName + "/Images/white.png");
+            uri = new Uri(directoryInfo.FullName + $"/Images/{color}.png");
             imgColor.Source = new BitmapImage(uri);
         }
+
+        
         private void CmbHost1B1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(cmbHost1B1.SelectedItem != null)
+        {         
+
+            if (cmbHost1B1.SelectedItem != null)
             {            
                 int selectionFirstNumber = (int)cmbHost1B1.SelectedItem;
                 cmbHost1B2.ItemsSource = ComboBoxDataLoader.LoadSecondNumberOptions(selectionFirstNumber);
@@ -63,7 +69,9 @@ namespace IPCalculator.Wpf
 
                 RefreshHost1IpAddress();
                 RefeshHost1NetworkInformation();
-            }         
+                CheckCompatibility();
+            }  
+
         }
 
         private void CmbHost1B2_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -71,19 +79,21 @@ namespace IPCalculator.Wpf
            
                 RefreshHost1IpAddress();
                 RefeshHost1NetworkInformation();
-            
-            
+            CheckCompatibility();
         }
 
         private void CmbHost1B3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshHost1IpAddress();
+            RefeshHost1NetworkInformation();
+            CheckCompatibility();
         }
 
         private void CmbHost1B4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshHost1IpAddress();
-
+            RefeshHost1NetworkInformation();
+            CheckCompatibility();
         }
 
         private void CmbHost1CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -92,6 +102,7 @@ namespace IPCalculator.Wpf
             RefreshHost1IpAddress();
             RefreshHost1SubnetInformation(subnetBitSequence);
             RefeshHost1NetworkInformation();
+            CheckCompatibility();
         }
 
         
@@ -112,22 +123,31 @@ namespace IPCalculator.Wpf
 
                 RefreshHost2IpAddress();
                 RefeshHost2NetworkInformation();
+                CheckCompatibility();
             }
+
+            
         }
 
         private void CmbHost2B2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {           
             RefreshHost2IpAddress();
+            RefeshHost2NetworkInformation();
+            CheckCompatibility();
         }
 
         private void CmbHost2B3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshHost2IpAddress();
+            RefeshHost2NetworkInformation();
+            CheckCompatibility();
         }
 
         private void CmbHost2B4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshHost2IpAddress();
+            RefeshHost2NetworkInformation();
+            CheckCompatibility();
         }
 
         private void CmbHost2CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -136,12 +156,28 @@ namespace IPCalculator.Wpf
             RefreshHost2IpAddress();
             RefreshHost2SubnetInformation(subnetBitSequence);
             RefeshHost2NetworkInformation();
+            CheckCompatibility();
         }
 
         void PopulateFirstComboBoxes()
         {       
             cmbHost1B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
             cmbHost2B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
+        }
+
+        void CheckCompatibility()
+        {
+            if (!String.IsNullOrEmpty(txtHost2NetworkBinary.Text) && !String.IsNullOrEmpty(txtHost1NetworkBinary.Text))
+            {
+                isCompatible = ipCalculatorService.CheckIfSameNetwork(txtHost1NetworkBinary.Text, txtHost2NetworkBinary.Text);
+
+                if (isCompatible)
+                {
+                    color = "green";
+                }
+                else color = "red";
+                MakeColor();
+            }
         }
 
         int GetHost1CidrValue()

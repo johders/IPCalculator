@@ -68,7 +68,7 @@ namespace IPCalculator.Core.Service
             {
                 replaceRemainderWithZeros.Append("0");
             }
-          
+
             string networkNumber = addressRange + replaceRemainderWithZeros.ToString();
 
             return networkNumber;
@@ -93,7 +93,7 @@ namespace IPCalculator.Core.Service
 
         public string GetBroadcastAddress(string lastHostNumber)
         {
-           
+
             string firstPart = lastHostNumber.Substring(0, lastHostNumber.Length - 1);
             string result = firstPart + "1";
             return result;
@@ -101,8 +101,8 @@ namespace IPCalculator.Core.Service
 
         public string GetSmallestHostAddress(string networkNumber)
         {
-           
-            string firstPart = networkNumber.Substring(0, networkNumber.Length -1);
+
+            string firstPart = networkNumber.Substring(0, networkNumber.Length - 1);
             string result = firstPart + "1";
             return result;
         }
@@ -110,7 +110,7 @@ namespace IPCalculator.Core.Service
         public List<int> SplitBitSequenceInBytes(string bitSequence)
         {
             List<int> result = new List<int>();
-            
+
             string decimal1 = bitSequence.Substring(0, 8);
             string decimal2 = bitSequence.Substring(8, 8);
             string decimal3 = bitSequence.Substring(16, 8);
@@ -130,7 +130,7 @@ namespace IPCalculator.Core.Service
 
         }
 
-        public string GetSubnetMask (int cidrValue)
+        public string GetSubnetMask(int cidrValue)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -139,13 +139,24 @@ namespace IPCalculator.Core.Service
                 sb.Append('1');
             }
 
-            for (int i = 1;i <= (32 - cidrValue); i++)
+            for (int i = 1; i <= (32 - cidrValue); i++)
             {
                 sb.Append('0');
             }
 
             return sb.ToString();
-           
+
+        }
+
+        public bool CheckIfSameNetwork(string networkHost1, string networkHost2)
+        {
+
+            if (networkHost1 == networkHost2)
+            {
+                return true;
+            }
+            return false;
+
         }
 
     }
