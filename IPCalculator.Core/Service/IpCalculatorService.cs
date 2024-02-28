@@ -10,9 +10,8 @@ namespace IPCalculator.Core.Service
 {
     public class IpCalculatorService
     {
-        public Host Host1 { get;}
-
-        public Host Host2 { get;}
+        public Host Host1 { get; set; }
+        public Host Host2 { get; set; }
 
         public IpCalculatorService()
         {
@@ -73,6 +72,39 @@ namespace IPCalculator.Core.Service
             string networkNumber = addressRange + replaceRemainderWithZeros.ToString();
 
             return networkNumber;
+        }
+
+        public string GetLargestHostAddress(string bitSequence, int cidrValue)
+        {
+            string addressRange = bitSequence.Substring(0, cidrValue);
+            string remainderAfterSplit = bitSequence.Substring(cidrValue, 32 - cidrValue);
+
+            StringBuilder replaceRemainderWithZeros = new StringBuilder();
+
+            for (int i = 0; i < remainderAfterSplit.Length - 1; i++)
+            {
+                replaceRemainderWithZeros.Append("1");
+            }
+
+            string largestHost = addressRange + replaceRemainderWithZeros.ToString() + "0";
+
+            return largestHost;
+        }
+
+        public string GetBroadcastAddress(string lastHostNumber)
+        {
+           
+            string firstPart = lastHostNumber.Substring(0, lastHostNumber.Length - 1);
+            string result = firstPart + "1";
+            return result;
+        }
+
+        public string GetSmallestHostAddress(string networkNumber)
+        {
+           
+            string firstPart = networkNumber.Substring(0, networkNumber.Length -1);
+            string result = firstPart + "1";
+            return result;
         }
 
         public List<int> SplitBitSequenceInBytes(string bitSequence)
