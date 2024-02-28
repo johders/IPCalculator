@@ -20,7 +20,7 @@ namespace IPCalculator.Core.Service
             Host2 = new Host();
         }
 
-        public string FormatIpAddress(List<int> numbers)
+        public string FormatToDDNetworkAddress(List<int> numbers)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -58,14 +58,31 @@ namespace IPCalculator.Core.Service
             return Convert.ToInt32(bits, 2);
         }
 
-        public List<int> SplitBitSequenceInBytes(string toSplit)
+        public string GetNetworkAddress(string bitSequence, int cidrValue)
+        {
+            string addressRange = bitSequence.Substring(0, cidrValue);
+            string remainderAfterSplit = bitSequence.Substring(cidrValue, 32 - cidrValue);
+
+            StringBuilder replaceRemainderWithZeros = new StringBuilder();
+
+            for (int i = 0; i < remainderAfterSplit.Length; i++)
+            {
+                replaceRemainderWithZeros.Append("0");
+            }
+          
+            string networkNumber = addressRange + replaceRemainderWithZeros.ToString();
+
+            return networkNumber;
+        }
+
+        public List<int> SplitBitSequenceInBytes(string bitSequence)
         {
             List<int> result = new List<int>();
             
-            string decimal1 = toSplit.Substring(0, 8);
-            string decimal2 = toSplit.Substring(8, 8);
-            string decimal3 = toSplit.Substring(16, 8);
-            string decimal4 = toSplit.Substring(24, 8);
+            string decimal1 = bitSequence.Substring(0, 8);
+            string decimal2 = bitSequence.Substring(8, 8);
+            string decimal3 = bitSequence.Substring(16, 8);
+            string decimal4 = bitSequence.Substring(24, 8);
 
             int number1 = ConvertBitsToDecimal(decimal1);
             int number2 = ConvertBitsToDecimal(decimal2);
