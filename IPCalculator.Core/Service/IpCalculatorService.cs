@@ -19,6 +19,19 @@ namespace IPCalculator.Core.Service
             Host2 = new Host();
         }
 
+        public void RefreshHost1IpAddress()
+        {          
+            Host1.IpAddressBinary = ConvertToByteSequence(Host1.UserInput);
+            Host1.IpAddressDD = FormatToDDNetworkAddress(Host1.UserInput);
+        }
+
+        public void RefreshHost1SubnetInformation()
+        {
+            int cidrValue = Host1.UserInput[4];            
+            Host1.SubnetAddressBinary = GetSubnetMask(cidrValue);
+            Host1.SubnetAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(Host1.SubnetAddressBinary));
+        }
+
         public string FormatToDDNetworkAddress(List<int> numbers)
         {
             StringBuilder sb = new StringBuilder();
