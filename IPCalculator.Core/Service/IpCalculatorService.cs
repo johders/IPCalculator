@@ -19,17 +19,35 @@ namespace IPCalculator.Core.Service
             Host2 = new Host();
         }
 
-        public void RefreshHost1IpAddress()
-        {          
-            Host1.IpAddressBinary = ConvertToByteSequence(Host1.UserInput);
-            Host1.IpAddressDD = FormatToDDNetworkAddress(Host1.UserInput);
+        public void RefreshHostIpAddress(Host host)
+        {
+            host.IpAddressBinary = ConvertToByteSequence(host.UserInput);
+            host.IpAddressDD = FormatToDDNetworkAddress(host.UserInput);
         }
 
-        public void RefreshHost1SubnetInformation()
+        public void RefreshHostSubnetInformation(Host host)
         {
-            int cidrValue = Host1.UserInput[4];            
-            Host1.SubnetAddressBinary = GetSubnetMask(cidrValue);
-            Host1.SubnetAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(Host1.SubnetAddressBinary));
+            int cidrValue = host.CidrValue;
+            host.SubnetAddressBinary = GetSubnetMask(cidrValue);
+            host.SubnetAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.SubnetAddressBinary));
+        }
+
+        public void GetHostNetworkAddress(Host host, string ipAddress, int cidrValue)
+        {
+            
+            string addressRange = ipAddress.Substring(0, cidrValue);
+            string remainderAfterSplit = ipAddress.Substring(cidrValue, 32 - cidrValue);
+
+            StringBuilder networkAddressRemainder = new StringBuilder();
+
+            for (int i = 0; i < remainderAfterSplit.Length; i++)
+            {
+                networkAddressRemainder.Append("0");
+            }
+
+            host.NetworkAddressBinary = addressRange + networkAddressRemainder.ToString();
+            host.NetworkAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.NetworkAddressBinary));
+
         }
 
         public string FormatToDDNetworkAddress(List<int> numbers)

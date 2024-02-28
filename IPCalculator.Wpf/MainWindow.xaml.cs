@@ -67,8 +67,12 @@ namespace IPCalculator.Wpf
                 cmbHost1CIDR.SelectedIndex = 0;
 
                 ipCalculatorService.Host1.UserInput = GetHost1NumberValues();
-                ipCalculatorService.RefreshHost1IpAddress();
-                ipCalculatorService.RefreshHost1SubnetInformation();
+                ipCalculatorService.Host1.CidrValue = GetHost1CidrValue();
+
+                ipCalculatorService.RefreshHostIpAddress(ipCalculatorService.Host1);
+                ipCalculatorService.RefreshHostSubnetInformation(ipCalculatorService.Host1);
+
+                ipCalculatorService.GetHostNetworkAddress(ipCalculatorService.Host1, ipCalculatorService.Host1.IpAddressBinary, ipCalculatorService.Host1.CidrValue);
 
                 ShowHost1Data();
             }
@@ -83,6 +87,18 @@ namespace IPCalculator.Wpf
 
             txtHost1SubnetBinary.Text = ipCalculatorService.Host1.SubnetAddressBinary;
             txtHost1SubnetDD.Text = ipCalculatorService.Host1.SubnetAddressDD;
+
+            txtHost1NetworkBinary.Text = ipCalculatorService.Host1.NetworkAddressBinary;
+            txtHost1NetworkDD.Text = ipCalculatorService.Host1.NetworkAddressDD;
+
+            txtHost1FirstHostBinary.Text = ipCalculatorService.Host1.FirstHostAddressBinary;
+            txtHost1FirstHostDD.Text = ipCalculatorService.Host1.FirstHostAddressDD;
+
+            txtHost1LastHostBinary.Text = ipCalculatorService.Host1.LastHostAddressBinary;
+            txtHost1LastHostDD.Text = ipCalculatorService.Host1.FirstHostAddressDD;
+
+            txtHost1BroadcastBinary.Text = ipCalculatorService.Host1.BroadCastAddressBinary;
+            txtHost1BroadcastDD.Text = ipCalculatorService.Host1.BroadCastAddressDD;
         }
 
         private void CmbHost1B2_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -106,7 +122,7 @@ namespace IPCalculator.Wpf
             if(cmbHost1CIDR.SelectedItem != null)
             {
                 ipCalculatorService.Host1.UserInput = GetHost1NumberValues();
-                ipCalculatorService.RefreshHost1SubnetInformation();
+                ipCalculatorService.RefreshHostSubnetInformation(ipCalculatorService.Host1);
                 ShowHost1Data();
             }
                 
@@ -202,8 +218,7 @@ namespace IPCalculator.Wpf
                     (int)cmbHost1B1.SelectedItem,
                     (int)cmbHost1B2.SelectedItem,
                     (int)cmbHost1B3.SelectedItem,
-                    (int)cmbHost1B4.SelectedItem,
-                    (int)cmbHost1CIDR.SelectedItem
+                    (int)cmbHost1B4.SelectedItem
                 };
             return host1DecimalValues;
         }
