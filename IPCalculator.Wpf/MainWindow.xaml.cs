@@ -240,7 +240,7 @@ namespace IPCalculator.Wpf
 
             if (cmbHost1CIDR.SelectedItem != null)
             {
-                cidrValue = (int)cmbHost1CIDR.SelectedItem;
+                bool success = int.TryParse(cmbHost1CIDR.SelectedItem.ToString().Replace("/", ""), out cidrValue);
             }
             return cidrValue;
         }
@@ -251,7 +251,7 @@ namespace IPCalculator.Wpf
 
             if (cmbHost2CIDR.SelectedItem != null)
             {
-                cidrValue = (int)cmbHost2CIDR.SelectedItem;
+                bool success = int.TryParse(cmbHost2CIDR.SelectedItem.ToString().Replace("/", ""), out cidrValue);
             }
             return cidrValue;
         }
