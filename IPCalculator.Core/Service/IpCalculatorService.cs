@@ -58,8 +58,9 @@ namespace IPCalculator.Core.Service
             return Convert.ToInt32(bits, 2);
         }
 
-        public void SplitBitSequenceInBytes(string toSplit)
+        public List<int> SplitBitSequenceInBytes(string toSplit)
         {
+            List<int> result = new List<int>();
             
             string decimal1 = toSplit.Substring(0, 8);
             string decimal2 = toSplit.Substring(8, 8);
@@ -70,6 +71,13 @@ namespace IPCalculator.Core.Service
             int number2 = ConvertBitsToDecimal(decimal2);
             int number3 = ConvertBitsToDecimal(decimal3);
             int number4 = ConvertBitsToDecimal(decimal4);
+
+            result.Add(number1);
+            result.Add(number2);
+            result.Add(number3);
+            result.Add(number4);
+
+            return result;
 
         }
 
