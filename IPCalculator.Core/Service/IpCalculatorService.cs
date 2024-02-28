@@ -50,6 +50,40 @@ namespace IPCalculator.Core.Service
 
         }
 
+        public void GetLastHostAddress(Host host, string bitSequence, int cidrValue)
+        {
+            string addressRange = bitSequence.Substring(0, cidrValue);
+            string remainderAfterSplit = bitSequence.Substring(cidrValue, 32 - cidrValue);
+
+            StringBuilder replaceRemainderWithZeros = new StringBuilder();
+
+            for (int i = 0; i < remainderAfterSplit.Length - 1; i++)
+            {
+                replaceRemainderWithZeros.Append("1");
+            }
+
+            string lastHostBinary = addressRange + replaceRemainderWithZeros.ToString() + "0";
+
+            host.LastHostAddressBinary = lastHostBinary;
+            host.LastHostAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.LastHostAddressBinary));
+        }
+
+        public void GetBroadcastAddress(Host host, string lastHostNumber)
+        {
+
+            string firstPart = lastHostNumber.Substring(0, lastHostNumber.Length - 1);
+            host.BroadCastAddressBinary = firstPart + "1";
+            host.BroadCastAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.BroadCastAddressBinary));
+        }
+
+        public void GetFirstHostAddress(Host host, string networkNumber)
+        {
+
+            string firstPart = networkNumber.Substring(0, networkNumber.Length - 1);
+            host.FirstHostAddressBinary = firstPart + "1";
+            host.FirstHostAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.FirstHostAddressBinary));
+        }
+
         public string FormatToDDNetworkAddress(List<int> numbers)
         {
             StringBuilder sb = new StringBuilder();
@@ -122,13 +156,13 @@ namespace IPCalculator.Core.Service
             return largestHost;
         }
 
-        public string GetBroadcastAddress(string lastHostNumber)
-        {
+        //public string GetBroadcastAddress(string lastHostNumber)
+        //{
 
-            string firstPart = lastHostNumber.Substring(0, lastHostNumber.Length - 1);
-            string result = firstPart + "1";
-            return result;
-        }
+        //    string firstPart = lastHostNumber.Substring(0, lastHostNumber.Length - 1);
+        //    string result = firstPart + "1";
+        //    return result;
+        //}
 
         public string GetSmallestHostAddress(string networkNumber)
         {

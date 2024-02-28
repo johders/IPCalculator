@@ -66,21 +66,14 @@ namespace IPCalculator.Wpf
                 cmbHost1CIDR.ItemsSource = ComboBoxDataLoader.LoadCidrValues(selectionFirstNumber);
                 cmbHost1CIDR.SelectedIndex = 0;
 
-                ipCalculatorService.Host1.UserInput = GetHost1NumberValues();
-                ipCalculatorService.Host1.CidrValue = GetHost1CidrValue();
-
-                ipCalculatorService.RefreshHostIpAddress(ipCalculatorService.Host1);
-                ipCalculatorService.RefreshHostSubnetInformation(ipCalculatorService.Host1);
-
-                ipCalculatorService.GetHostNetworkAddress(ipCalculatorService.Host1, ipCalculatorService.Host1.IpAddressBinary, ipCalculatorService.Host1.CidrValue);
-
-                ShowHost1Data();
+                GetAllHost1Info();
+                DisplayHost1Information();
             }
 
 
         }
 
-        void ShowHost1Data()
+        void DisplayHost1Information()
         {
             txtHost1IPBinary.Text = ipCalculatorService.Host1.IpAddressBinary;
             txtHost1IPDD.Text = ipCalculatorService.Host1.IpAddressDD;
@@ -95,7 +88,7 @@ namespace IPCalculator.Wpf
             txtHost1FirstHostDD.Text = ipCalculatorService.Host1.FirstHostAddressDD;
 
             txtHost1LastHostBinary.Text = ipCalculatorService.Host1.LastHostAddressBinary;
-            txtHost1LastHostDD.Text = ipCalculatorService.Host1.FirstHostAddressDD;
+            txtHost1LastHostDD.Text = ipCalculatorService.Host1.LastHostAddressDD;
 
             txtHost1BroadcastBinary.Text = ipCalculatorService.Host1.BroadCastAddressBinary;
             txtHost1BroadcastDD.Text = ipCalculatorService.Host1.BroadCastAddressDD;
@@ -104,29 +97,30 @@ namespace IPCalculator.Wpf
         private void CmbHost1B2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+            GetAllHost1Info();
+            DisplayHost1Information();
+
 
         }
 
         private void CmbHost1B3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            GetAllHost1Info();
+            DisplayHost1Information();
         }
 
         private void CmbHost1B4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+            GetAllHost1Info();
+            DisplayHost1Information();
         }
 
         private void CmbHost1CIDR_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cmbHost1CIDR.SelectedItem != null)
-            {
-                ipCalculatorService.Host1.UserInput = GetHost1NumberValues();
-                ipCalculatorService.RefreshHostSubnetInformation(ipCalculatorService.Host1);
-                ShowHost1Data();
-            }
-                
-            
+
+            GetAllHost1Info();
+            DisplayHost1Information();
+
         }
 
 
@@ -157,19 +151,25 @@ namespace IPCalculator.Wpf
 
         }
 
-
-
-
-
-
-        /// <summary>
-        /// /////////////////////////////////////////////////////////////
-        /// </summary>
-
         void PopulateFirstComboBoxes()
         {
             cmbHost1B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
             cmbHost2B1.ItemsSource = ComboBoxDataLoader.AddFirstNumberOptions();
+        }
+
+        void GetAllHost1Info()
+        {
+            if (cmbHost1B1.SelectedItem != null && cmbHost1B2.SelectedItem != null && cmbHost1B3.SelectedItem != null && cmbHost1B4.SelectedItem != null)
+            {
+                ipCalculatorService.Host1.UserInput = GetHost1UserInputValues();
+                ipCalculatorService.Host1.CidrValue = GetHost1CidrValue();
+                ipCalculatorService.RefreshHostIpAddress(ipCalculatorService.Host1);
+                ipCalculatorService.RefreshHostSubnetInformation(ipCalculatorService.Host1);
+                ipCalculatorService.GetHostNetworkAddress(ipCalculatorService.Host1, ipCalculatorService.Host1.IpAddressBinary, ipCalculatorService.Host1.CidrValue);
+                ipCalculatorService.GetLastHostAddress(ipCalculatorService.Host1, ipCalculatorService.Host1.IpAddressBinary, ipCalculatorService.Host1.CidrValue);
+                ipCalculatorService.GetFirstHostAddress(ipCalculatorService.Host1, ipCalculatorService.Host1.NetworkAddressBinary);
+                ipCalculatorService.GetBroadcastAddress(ipCalculatorService.Host1, ipCalculatorService.Host1.LastHostAddressBinary);
+            }
         }
 
         void CheckCompatibility()
@@ -211,7 +211,7 @@ namespace IPCalculator.Wpf
             return cidrValue;
         }
 
-        List<int> GetHost1NumberValues()
+        List<int> GetHost1UserInputValues()
         {
             List<int> host1DecimalValues = new List<int>
                 {
@@ -233,89 +233,6 @@ namespace IPCalculator.Wpf
                     (int)cmbHost2B4.SelectedItem
                 };
             return host2DecimalValues;
-        }
-
-        void RefeshHost1NetworkInformation()
-        {
-            if (cmbHost1B1.SelectedItem != null && cmbHost1B2.SelectedItem != null && cmbHost1B3.SelectedItem != null && cmbHost1B4.SelectedItem != null)
-            {
-                string ipAddress = ipCalculatorService.ConvertToByteSequence(GetHost1NumberValues());
-                int cidrValue = GetHost1CidrValue();
-                string networkAddressBinary = ipCalculatorService.GetNetworkAddress(ipAddress, cidrValue);
-                txtHost1NetworkBinary.Text = networkAddressBinary;
-                txtHost1NetworkDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(networkAddressBinary));
-
-                string firstHostBinary = ipCalculatorService.GetSmallestHostAddress(networkAddressBinary);
-                txtHost1FirstHostBinary.Text = ipCalculatorService.GetSmallestHostAddress(firstHostBinary);
-                txtHost1FirstHostDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(firstHostBinary));
-
-                string lastHostBinary = ipCalculatorService.GetLargestHostAddress(networkAddressBinary, cidrValue);
-                txtHost1LastHostBinary.Text = lastHostBinary;
-                txtHost1LastHostDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(lastHostBinary));
-
-                string broadcastBinary = ipCalculatorService.GetBroadcastAddress(lastHostBinary);
-                txtHost1BroadcastBinary.Text = broadcastBinary;
-                txtHost1BroadcastDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(broadcastBinary));
-
-            }
-        }
-
-        void RefeshHost2NetworkInformation()
-        {
-            if (cmbHost2B1.SelectedItem != null && cmbHost2B2.SelectedItem != null && cmbHost2B3.SelectedItem != null && cmbHost2B4.SelectedItem != null)
-            {
-                string ipAddress = ipCalculatorService.ConvertToByteSequence(GetHost2NumberValues());
-                int cidrValue = GetHost2CidrValue();
-                string networkAddressBinary = ipCalculatorService.GetNetworkAddress(ipAddress, cidrValue);
-                txtHost2NetworkBinary.Text = networkAddressBinary;
-                txtHost2NetworkDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(networkAddressBinary));
-
-                string firstHostBinary = ipCalculatorService.GetSmallestHostAddress(networkAddressBinary);
-                txtHost2FirstHostBinary.Text = ipCalculatorService.GetSmallestHostAddress(firstHostBinary);
-                txtHost2FirstHostDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(firstHostBinary));
-
-                string lastHostBinary = ipCalculatorService.GetLargestHostAddress(networkAddressBinary, cidrValue);
-                txtHost2LastHostBinary.Text = lastHostBinary;
-                txtHost2LastHostDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(lastHostBinary));
-
-                string broadcastBinary = ipCalculatorService.GetBroadcastAddress(lastHostBinary);
-                txtHost2BroadcastBinary.Text = broadcastBinary;
-                txtHost2BroadcastDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(broadcastBinary));
-
-            }
-        }
-
-
-        void RefreshHost1SubnetInformation(string subnetBitSequence)
-        {
-            txtHost1SubnetBinary.Text = subnetBitSequence;
-            txtHost1SubnetDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(subnetBitSequence));
-        }
-
-        void RefreshHost2SubnetInformation(string subnetBitSequence)
-        {
-            txtHost2SubnetBinary.Text = subnetBitSequence;
-            txtHost2SubnetDD.Text = ipCalculatorService.FormatToDDNetworkAddress(ipCalculatorService.SplitBitSequenceInBytes(subnetBitSequence));
-        }
-
-
-        //void RefreshHost1IpAddress()
-        //{
-        //    if (cmbHost1B1.SelectedItem != null && cmbHost1B2.SelectedItem != null && cmbHost1B3.SelectedItem != null && cmbHost1B4.SelectedItem != null)
-        //    {
-        //        txtHost1IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost1NumberValues());
-        //        txtHost1IPDD.Text = ipCalculatorService.FormatToDDNetworkAddress(GetHost1NumberValues());
-
-        //    }
-        //}
-
-        void RefreshHost2IpAddress()
-        {
-            if (cmbHost2B1.SelectedItem != null && cmbHost2B2.SelectedItem != null && cmbHost2B3.SelectedItem != null && cmbHost2B4.SelectedItem != null)
-            {
-                txtHost2IPBinary.Text = ipCalculatorService.ConvertToByteSequence(GetHost2NumberValues());
-                txtHost2IPDD.Text = ipCalculatorService.FormatToDDNetworkAddress(GetHost2NumberValues());
-            }
         }
     }
 }
