@@ -36,6 +36,7 @@ namespace IPCalculator.Wpf
         {
             MakeColor();
             PopulateFirstComboBoxes();
+            ipCalculatorService.SplitIt();
         }
 
         private void MakeColor()

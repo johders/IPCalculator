@@ -53,6 +53,26 @@ namespace IPCalculator.Core.Service
             return sb.ToString();
         }
 
+        public int ConvertBitsToDecimal(string bits)
+        {
+            return Convert.ToInt32(bits, 2);
+        }
+
+        public void SplitBitSequenceInBytes(string toSplit)
+        {
+            
+            string decimal1 = toSplit.Substring(0, 8);
+            string decimal2 = toSplit.Substring(8, 8);
+            string decimal3 = toSplit.Substring(16, 8);
+            string decimal4 = toSplit.Substring(24, 8);
+
+            int number1 = ConvertBitsToDecimal(decimal1);
+            int number2 = ConvertBitsToDecimal(decimal2);
+            int number3 = ConvertBitsToDecimal(decimal3);
+            int number4 = ConvertBitsToDecimal(decimal4);
+
+        }
+
         public string GetSubnetMask (int cidrValue)
         {
             StringBuilder sb = new StringBuilder();
