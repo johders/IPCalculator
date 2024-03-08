@@ -58,7 +58,6 @@ namespace IPCalculator.Core.Service
             }
 
             return thirdNumberOptions.AsReadOnly();
-
         }
 
         public static IEnumerable<int> LoadFourthNumberOption()

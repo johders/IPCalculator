@@ -47,7 +47,6 @@ namespace IPCalculator.Core.Service
 
             host.NetworkAddressBinary = addressRange + networkAddressRemainder.ToString();
             host.NetworkAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.NetworkAddressBinary));
-
         }
 
         public void GetLastHostAddress(Host host, string bitSequence, int cidrValue)
@@ -70,7 +69,6 @@ namespace IPCalculator.Core.Service
 
         public void GetBroadcastAddress(Host host, string lastHostNumber)
         {
-
             string firstPart = lastHostNumber.Substring(0, lastHostNumber.Length - 1);
             host.BroadCastAddressBinary = firstPart + "1";
             host.BroadCastAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.BroadCastAddressBinary));
@@ -78,7 +76,6 @@ namespace IPCalculator.Core.Service
 
         public void GetFirstHostAddress(Host host, string networkNumber)
         {
-
             string firstPart = networkNumber.Substring(0, networkNumber.Length - 1);
             host.FirstHostAddressBinary = firstPart + "1";
             host.FirstHostAddressDD = FormatToDDNetworkAddress(SplitBitSequenceInBytes(host.FirstHostAddressBinary));
@@ -142,7 +139,6 @@ namespace IPCalculator.Core.Service
             result.Add(number4);
 
             return result;
-
         }
 
         public string GetSubnetMask(int cidrValue)
@@ -160,18 +156,15 @@ namespace IPCalculator.Core.Service
             }
 
             return sb.ToString();
-
         }
 
         public bool CheckIfSameNetwork()
         {
-
             if (Host1.NetworkAddressBinary == Host2.NetworkAddressBinary)
             {
                 return true;
             }
             return false;
-
         }
 
     }

@@ -26,15 +26,22 @@ namespace IPCalculator.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Global Variables
+
         IpCalculatorService ipCalculatorService;
         string color = "white";
         bool isCompatible = false;
+
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
             ipCalculatorService = new IpCalculatorService();
         }
+
+        #region Event Handlers
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             MakeColor();
@@ -50,7 +57,6 @@ namespace IPCalculator.Wpf
             uri = new Uri(directoryInfo.FullName + $"/Images/{color}.png");
             imgColor.Source = new BitmapImage(uri);
         }
-
 
         private void CmbHost1B1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -68,9 +74,7 @@ namespace IPCalculator.Wpf
             GetAllHost1Info();
             DisplayHost1Information();
 
-        }
-
-        
+        }      
 
         private void CmbHost1B2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -95,8 +99,6 @@ namespace IPCalculator.Wpf
             GetAllHost1Info();
             DisplayHost1Information();
         }
-
-
 
         private void CmbHost2B1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -138,6 +140,10 @@ namespace IPCalculator.Wpf
             GetAllHost2Info();
             DisplayHost2Information();
         }
+
+        #endregion
+
+        #region Methods
 
         private void PopulateFirstComboBoxes()
         {
@@ -240,7 +246,7 @@ namespace IPCalculator.Wpf
 
             if (cmbHost1CIDR.SelectedItem != null)
             {
-                bool success = int.TryParse(cmbHost1CIDR.SelectedItem.ToString().Replace("/", ""), out cidrValue);
+                cidrValue = int.Parse(cmbHost1CIDR.SelectedItem.ToString().Replace("/", ""));
             }
             return cidrValue;
         }
@@ -251,7 +257,7 @@ namespace IPCalculator.Wpf
 
             if (cmbHost2CIDR.SelectedItem != null)
             {
-                bool success = int.TryParse(cmbHost2CIDR.SelectedItem.ToString().Replace("/", ""), out cidrValue);
+                cidrValue = int.Parse(cmbHost2CIDR.SelectedItem.ToString().Replace("/", ""));
             }
             return cidrValue;
         }
@@ -279,5 +285,7 @@ namespace IPCalculator.Wpf
                 };
             return host2DecimalValues;
         }
+
+        #endregion
     }
 }
