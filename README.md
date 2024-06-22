@@ -1,4 +1,20 @@
-# PE1 2324 2 IPCalculator  
+# PE1 IPCalculator (Semester 2 - Feb 2024)
+
+## Intro
+
+This C# WPF project allows the user to input and compare two IPv4 addresses and CIDR values from drop down options. 
+The WPF app will return the network's subnet mask, network address, first and last hosts and broadcast address. 
+Additionaly, it will compare both network addresses and inform the user if these are within the same network or not.
+
+## Learning objectives
+
+- Learning about the IPv4 protocol through C# WPF app creation
+- Working with classes
+- Field and property encapsulation
+- Learn to work with constructors, class instances and method overrides
+- Keeping a clear and logic separation between class library and code behind
+
+# Original assignment instructions (NL):
 
 ## Opdracht  
 
